@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { formatPrice } from "../../util/format";
 import api from "../../services/api";
 
+import CartContext from "../../Context/CartContext";
 
 import { Container, ProductList } from "./styles";
 
 function Home() {
+  const { cart, addToCart } = useContext(CartContext);
+
   const [products, setProducts] = useState([]);
+
+  const amount = useMemo(() => {
+    return cart.reduce((sumAmount, product) => {
+      return (sumAmount[product.id] = product.amount);
+    });
+  }, [cart]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -24,7 +33,9 @@ function Home() {
     loadProducts();
   }, []);
 
-  function handleAddProduct(id) {}
+  const handleAddProduct = useCallback(async (id) => {
+    await addToCart(id);
+  }, [addToCart]);
 
   return (
     <Container>
@@ -38,7 +49,7 @@ function Home() {
             <button type="button" onClick={() => handleAddProduct(product.id)}>
               <div>
                 <MdAddShoppingCart size={16} color="#FFF" />
-                {/* {amount[product.id] || 0} */}
+                {amount[product.id] || 0}
               </div>
 
               <span>ADICIONAR AO CARRINHO</span>

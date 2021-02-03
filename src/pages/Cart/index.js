@@ -1,30 +1,32 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
   MdDelete,
 } from "react-icons/md";
+import { formatPrice } from "../../util/format";
 
-//import { formatPrice } from "../../util/format";
+import CartContext from "../../Context/CartContext";
 
 import { Container, ProductTable, Total } from "./styles";
 
 export default function Cart() {
-  /* const total = useSelector(state =>
-        formatPrice(
-            state.cart.reduce((totalSum, product) => {
-                return totalSum + product.price * product.amount;
-            }, 0)
-        )
-    ); */
-  const cart = [];
+  const { cart } = useContext(CartContext);
 
-  /* const cart = useSelector(state =>
-        state.cart.map(product => ({
-            ...product,
-            subtotal: formatPrice(product.price * product.amount),
-        }))
-    ); */
+  const total = useMemo(() => {
+    return formatPrice(
+      cart.reduce((totalSum, product) => {
+        return totalSum + product.price * product.amount;
+      }, 0)
+    );
+  }, [cart]);
+
+  const carts = useMemo(() => {
+    return cart.map((product) => ({
+      ...product,
+      subtotal: formatPrice(product.price * product.amount),
+    }));
+  }, [cart]);
 
   function increment(product) {
     /* dispatch(
@@ -51,7 +53,7 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cart.map((product) => (
+          {carts.map((product) => (
             <tr key={String(product.id)}>
               <td>
                 <img src={product.image} alt={product.title} />
@@ -63,11 +65,11 @@ export default function Cart() {
               <td>
                 <div>
                   <button type="button" onClick={() => decrement(product)}>
-                    <MdRemoveCircleOutline size={20} color="#7159c1" />
+                    <MdRemoveCircleOutline size={20} color="#F05742" />
                   </button>
                   <input type="number" readOnly value={product.amount} />
                   <button type="button" onClick={() => increment(product)}>
-                    <MdAddCircleOutline size={20} color="#7159c1" />
+                    <MdAddCircleOutline size={20} color="#F05742" />
                   </button>
                 </div>
               </td>
@@ -85,7 +87,7 @@ export default function Cart() {
                                     ) */
                   }}
                 >
-                  <MdDelete size={20} color="#7159c1" />
+                  <MdDelete size={20} color="#F05742" />
                 </button>
               </td>
             </tr>
@@ -98,7 +100,7 @@ export default function Cart() {
 
         <Total>
           <span>TOTAL</span>
-          <strong>0{/* {total} */}</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
