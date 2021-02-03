@@ -1,0 +1,66 @@
+{
+  "stock": [
+    {
+      "id": 1,
+      "amount": 3
+    },
+    {
+      "id": 2,
+      "amount": 2
+    },
+    {
+      "id": 3,
+      "amount": 5
+    },
+    {
+      "id": 4,
+      "amount": 1
+    },
+    {
+      "id": 5,
+      "amount": 1
+    },
+    {
+      "id": 6,
+      "amount": 4
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "Bolo trufado de chocolate ao leite",
+      "price": 49.9,
+      "image": "https://www.receitasnestle.com.br/images/default-source/recipes/bolo-trufado.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Bolo de cenoura com cobertura de chocolate",
+      "price": 24.49,
+      "image": "https://img.itdg.com.br/images/recipes/000/048/083/329518/329518_original.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Bolo Kit Kat com creme de avelã",
+      "price": 64.9,
+      "image": "https://www.daninoce.com.br/wp-content/uploads/2019/05/bolo-kit-kat-destaque.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Bolo piscina fondue",
+      "price": 69.9,
+      "image": "https://conteudo.imguol.com.br/c/entretenimento/18/2020/07/08/bolo-piscina-fondue-1594221790135_v2_1920x1920.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Bolo de coxinha",
+      "price": 39.9,
+      "image": "https://areceitasimples.com/wp-content/uploads/2020/11/bolo-coxinha.png"
+    },
+    {
+      "id": 6,
+      "title": "Bolo Red Vevelt",
+      "price": 59.9,
+      "image": "https://a2.vnda.com.br/2000x/bolodamadre/2019/01/23/1102-bolo-red-velvet-371.jpg?1548250012"
+    }
+  ]
+}
