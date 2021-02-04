@@ -12,12 +12,6 @@ function Home() {
 
   const [products, setProducts] = useState([]);
 
-  const amount = useMemo(() => {
-    return cart.reduce((sumAmount, product) => {
-      return (sumAmount[product.id] = product.amount);
-    });
-  }, [cart]);
-
   useEffect(() => {
     async function loadProducts() {
       const response = await api.get("products");
@@ -37,6 +31,14 @@ function Home() {
     await addToCart(id);
   }, [addToCart]);
 
+  const amount = useCallback((id) => {
+    const item = cart.find(x => x.id === id);
+    if(item)
+      return item.amount;
+
+    return 0;
+  }, [cart]);
+
   return (
     <Container>
       <ProductList>
@@ -49,7 +51,7 @@ function Home() {
             <button type="button" onClick={() => handleAddProduct(product.id)}>
               <div>
                 <MdAddShoppingCart size={16} color="#FFF" />
-                {amount[product.id] || 0}
+                {amount(product.id) || 0}
               </div>
 
               <span>ADICIONAR AO CARRINHO</span>

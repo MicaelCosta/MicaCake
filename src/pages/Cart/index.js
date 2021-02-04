@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useCallback } from "react";
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
@@ -10,10 +10,12 @@ import CartContext from "../../Context/CartContext";
 
 import { Container, ProductTable, Total } from "./styles";
 
-export default function Cart() {
-  const { cart } = useContext(CartContext);
+function Cart() {
+  const { cart, updateAmount, removeFromCart } = useContext(CartContext);
 
   const total = useMemo(() => {
+    if(!cart || !cart.length) return formatPrice(0);
+
     return formatPrice(
       cart.reduce((totalSum, product) => {
         return totalSum + product.price * product.amount;
@@ -28,17 +30,13 @@ export default function Cart() {
     }));
   }, [cart]);
 
-  function increment(product) {
-    /* dispatch(
-            CartActions.updateAmountRequest(product.id, product.amount + 1)
-        ); */
-  }
+  const increment = useCallback((product) => {
+    updateAmount(product.id, product.amount + 1);
+  }, [updateAmount]);
 
-  function decrement(product) {
-    /* dispatch(
-            CartActions.updateAmountRequest(product.id, product.amount - 1)
-        ); */
-  }
+  const decrement = useCallback((product) => {
+    updateAmount(product.id, product.amount - 1);
+  }, [updateAmount]);
 
   return (
     <Container>
@@ -79,13 +77,7 @@ export default function Cart() {
               <td>
                 <button
                   type="button"
-                  onClick={() => {
-                    /* dispatch(
-                                        CartActions.removeFromCart(
-                                            product.id
-                                        )
-                                    ) */
-                  }}
+                  onClick={() => removeFromCart(product.id)}
                 >
                   <MdDelete size={20} color="#F05742" />
                 </button>
@@ -106,3 +98,5 @@ export default function Cart() {
     </Container>
   );
 }
+
+export default Cart;

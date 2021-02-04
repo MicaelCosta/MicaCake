@@ -9,6 +9,7 @@ export const Container = styled.header`
   min-height: 60px;
   background-color: #FFF;
   width: 100% important;
+  padding: 0 10px;
 `;
 
 export const Logo = styled.img.attrs({
