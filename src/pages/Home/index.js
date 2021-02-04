@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { formatPrice } from "../../util/format";
 import api from "../../services/api";
@@ -33,7 +33,7 @@ function Home() {
 
   const amount = useCallback((id) => {
     const item = cart.find(x => x.id === id);
-    if(item)
+    if (item)
       return item.amount;
 
     return 0;

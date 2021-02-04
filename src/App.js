@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import api from "./services/api";
 import { formatPrice } from "./util/format";
 
 import { Header } from "./components";
 import Routes from "./routes";
-import history from "./services/history";
 
 import GlobalStyle from "./styles/global";
 
@@ -15,8 +14,19 @@ import CartContext from "./Context/CartContext";
 function App() {
   const [cart, setCart] = useState([]);
 
+  const removeFromCart = useCallback((id) => {
+    setCart(prevState => {
+      toast.success("Produto removido do carrinho!");
+
+      return prevState.filter(x => x.id !== id);
+    });
+  }, []);
+
   const updateAmount = useCallback(async (id, amount) => {
-    if (amount <= 0) return;
+    if (amount === 0) {
+      removeFromCart(id);
+      return;
+    }
 
     const { data: stock } = await api.get(`/stock/${id}`);
     const stockAmount = stock.amount;
@@ -27,14 +37,12 @@ function App() {
     }
 
     setCart((prevState) => {
-      const productIndex = prevState.findIndex((x) => x.id === id);
-      if (productIndex >= 0) {
-        prevState[productIndex].amount = Number(amount);
-      }
-
-      return prevState;
+      return prevState.map(item => ({
+        ...item,
+        amount: item.id === id ? amount : item.amount
+      }));
     });
-  }, []);
+  }, [removeFromCart]);
 
   const addToCart = useCallback(async (id) => {
     //Verifica se o produto já existe no carrinho
@@ -71,24 +79,10 @@ function App() {
     }
   }, [cart, updateAmount]);
 
-  const removeFromCart = useCallback((id) => {
-    setCart(prevState => {
-      const productIndex = prevState.findIndex(x => x.id === id);
-  
-      if(productIndex >= 0){
-        prevState.splice(productIndex, 1);
-
-        toast.success("Produto removido do carrinho!");
-      }
-
-      return prevState;
-    });
-  }, []);
-
   return (
-    <Router history={history}>
+    <BrowserRouter>
 
-      <CartContext.Provider 
+      <CartContext.Provider
         value={{
           cart,
           addToCart,
@@ -103,7 +97,7 @@ function App() {
       <GlobalStyle />
 
       <ToastContainer autoClose={3000} />
-    </Router>
+    </BrowserRouter>
   );
 }
 

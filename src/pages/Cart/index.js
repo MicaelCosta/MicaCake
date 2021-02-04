@@ -14,7 +14,7 @@ function Cart() {
   const { cart, updateAmount, removeFromCart } = useContext(CartContext);
 
   const total = useMemo(() => {
-    if(!cart || !cart.length) return formatPrice(0);
+    if (!cart || !cart.length) return formatPrice(0);
 
     return formatPrice(
       cart.reduce((totalSum, product) => {
@@ -30,12 +30,12 @@ function Cart() {
     }));
   }, [cart]);
 
-  const increment = useCallback((product) => {
-    updateAmount(product.id, product.amount + 1);
+  const increment = useCallback(async (product) => {
+    await updateAmount(product.id, product.amount + 1);
   }, [updateAmount]);
 
-  const decrement = useCallback((product) => {
-    updateAmount(product.id, product.amount - 1);
+  const decrement = useCallback(async (product) => {
+    await updateAmount(product.id, product.amount - 1);
   }, [updateAmount]);
 
   return (
