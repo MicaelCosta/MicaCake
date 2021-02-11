@@ -21,7 +21,6 @@ export const ProductList = styled.ul`
     padding: 20px;
 
     img {
-      align-self: center;
       width: 100%;
       height: 60%;
     }

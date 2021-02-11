@@ -7,7 +7,7 @@ import { formatPrice } from "./util/format";
 import { Header } from "./components";
 import Routes from "./routes";
 
-import GlobalStyle from "./styles/global";
+import GlobalStyle, { Container } from "./styles/global";
 
 import CartContext from "./Context/CartContext";
 
@@ -81,6 +81,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <GlobalStyle />
 
       <CartContext.Provider
         value={{
@@ -91,10 +92,11 @@ function App() {
         }}
       >
         <Header />
-        <Routes />
-      </CartContext.Provider>
 
-      <GlobalStyle />
+        <Container>
+          <Routes />
+        </Container>
+      </CartContext.Provider>
 
       <ToastContainer autoClose={3000} />
     </BrowserRouter>

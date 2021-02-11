@@ -53,7 +53,7 @@ function Cart() {
         <tbody>
           {carts.map((product) => (
             <tr key={String(product.id)}>
-              <td>
+              <td className="image">
                 <img src={product.image} alt={product.title} />
               </td>
               <td>
